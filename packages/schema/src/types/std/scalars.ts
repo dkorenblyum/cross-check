@@ -157,14 +157,9 @@ export const SingleWord = scalar("SingleWord", {
 
 export const ISODate = scalar("ISODate", {
   description: "ISO date",
-  typescript: "ISO date",
-  base: "Text",
+  typescript: "ISODate",
 
   validation() {
-    console.log("====================================");
-    console.log(validators.isISODateString);
-    console.log("====================================");
-    console.log(Object.keys(validators));
     return validators.isISODateString();
   }
 });

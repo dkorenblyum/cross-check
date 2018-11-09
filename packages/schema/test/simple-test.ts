@@ -18,7 +18,8 @@ mod.test(
       await validateDraft(SimpleArticle, registry, {
         hed: null,
         dek: null,
-        body: null
+        body: null,
+        issueDate: null,
       }),
       [],
       "all fields can be null in drafts"
@@ -68,7 +69,8 @@ mod.test(
       await validateDraft(SimpleArticle, registry, {
         hed: "Hello world\nMultiline strings are allowed in SingleLine",
         dek: "Hello, the cool world!",
-        body: null
+        body: null,
+        issueDate: null
       }),
       [],
       "draft mode can accept the widened type"
@@ -81,7 +83,8 @@ mod.test("published drafts must be narrow", async (assert, { registry }) => {
     await validatePublished(SimpleArticle, registry, {
       hed: "Hello world\nProblem here!",
       dek: "Hello, the cool world!",
-      body: null
+      body: null,
+      issueDate: null
     }),
     [typeError("string:single-line", "hed"), missingError("body")],
     "published records must not be missing fields or have the widened type"
@@ -97,7 +100,8 @@ mod.test(
 
         // dek is allowed to be an empty string, because its type is not required
         dek: "",
-        body: ""
+        body: "",
+        issueDate: null 
       }),
       [
         {
@@ -129,6 +133,7 @@ mod.test("parsing", (assert, { registry }) => {
     {
       hed: "Hello world",
       dek: null,
+      issueDate: null,
       body: "The body"
     }
   );
@@ -137,12 +142,14 @@ mod.test("parsing", (assert, { registry }) => {
     SimpleArticle.with({ registry }).parse({
       hed: "Hello world",
       dek: "Hello. Hello world.",
-      body: "The body"
+      body: "The body",
+      issueDate: "2018-11-09T20:05:21.098Z"
     }),
     {
       hed: "Hello world",
       dek: "Hello. Hello world.",
-      body: "The body"
+      body: "The body",
+      issueDate: "2018-11-09T20:05:21.098Z"
     }
   );
 });
