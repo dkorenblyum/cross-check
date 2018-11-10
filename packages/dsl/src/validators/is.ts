@@ -90,12 +90,12 @@ export class IsISODateStringValidator extends BasicValidator<unknown> {
     let parsed = Date.parse(value);
 
     if (isNaN(parsed))
-      return [{ path: [], message: { name: "type", details: "ISODateString" } }];
+      return [{ path: [], message: { name: "ISODateString" } }];
   
     if (value === new Date(parsed).toISOString()) {
       return [];
     } else {
-      return [{ path: [], message: { name: "type", details: "ISODateString" } }];
+      return [{ path: [], message: { name: "ISODateString" } }];
     }
   }
 }

@@ -143,13 +143,13 @@ mod.test("parsing", (assert, { registry }) => {
       hed: "Hello world",
       dek: "Hello. Hello world.",
       body: "The body",
-      issueDate: "2018-11-09T20:05:21.098Z"
+      issueDate: null 
     }),
     {
       hed: "Hello world",
       dek: "Hello. Hello world.",
       body: "The body",
-      issueDate: "2018-11-09T20:05:21.098Z"
+      issueDate: null 
     }
   );
 });
@@ -159,6 +159,7 @@ mod.test("serialize", (assert, { registry }) => {
     SimpleArticle.with({ registry }).serialize({
       hed: "Hello world",
       dek: null,
+      issueDate: null,
       body: "The body"
     }),
     {
@@ -171,6 +172,7 @@ mod.test("serialize", (assert, { registry }) => {
     SimpleArticle.with({ registry }).serialize({
       hed: "Hello world",
       dek: "Hello. Hello world.",
+      issueDate: null,
       body: "The body"
     }),
     {
@@ -186,7 +188,8 @@ mod.test("a valid published draft", async (assert, { registry }) => {
     await validatePublished(SimpleArticle, registry, {
       hed: "Hello world",
       dek: "Hello, the cool world!\nMultiline allowed here",
-      body: "Hello world.\nThis text is permitted.\nTotally fine."
+      body: "Hello world.\nThis text is permitted.\nTotally fine.",
+      issueDate: null
     }),
     [],
     "a valid draft"
@@ -216,7 +219,7 @@ mod.test("Invalid shape with strictKeys", async (assert, { registry }) => {
     await validatePublished(SimpleArticle, registry, {}),
     [
       keysError({
-        missing: ["hed", "dek", "body"]
+        missing: ["hed", "dek", "body", "issueDate"]
       })
     ],
     "missing all fields"
@@ -225,7 +228,8 @@ mod.test("Invalid shape with strictKeys", async (assert, { registry }) => {
   assert.deepEqual(
     await validatePublished(SimpleArticle, registry, {
       hed: "Hello world",
-      dek: "Hello, the cool world!"
+      dek: "Hello, the cool world!",
+      issueDate: null
     }),
     [
       keysError({
@@ -240,7 +244,8 @@ mod.test("Invalid shape with strictKeys", async (assert, { registry }) => {
       hed: "Hello world",
       dek: "Hello, the cool world!",
       body: "Hello!!!",
-      wat: "dis"
+      wat: "dis",
+      issueDate: null
     }),
     [
       keysError({
@@ -254,6 +259,7 @@ mod.test("Invalid shape with strictKeys", async (assert, { registry }) => {
     await validatePublished(SimpleArticle, registry, {
       hed: "Hello world",
       dek: "Hello, the cool world!",
+      issueDate: null,
       wat: "dis"
     }),
     [
